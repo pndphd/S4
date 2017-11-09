@@ -1,0 +1,53 @@
+
+C:\Users\peter.dudley\Google Drive\Documents\Research\Project - Salmon\Superimposition\S4\S4\Model\executable>set SWARMHOME=C:\Users\PETER~1.DUD\GOOGLE~1\DOCUME~1\Research\PROJEC~3\SUPERI~1\S4\S4\Model\EXECUT~1\..\swarm 
+
+C:\Users\peter.dudley\Google Drive\Documents\Research\Project - Salmon\Superimposition\S4\S4\Model\executable>path=C:\Users\PETER~1.DUD\GOOGLE~1\DOCUME~1\Research\PROJEC~3\SUPERI~1\S4\S4\Model\EXECUT~1\..\swarm\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\inSALMO\Code\inSALMO\.libs;C:\swarm\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\GNUstep\bin;C:\GNUstep\GNUstep\System\Tools 
+
+C:\Users\peter.dudley\Google Drive\Documents\Research\Project - Salmon\Superimposition\S4\S4\Model\executable>path=C:\Users\PETER~1.DUD\GOOGLE~1\DOCUME~1\Research\PROJEC~3\SUPERI~1\S4\S4\Model\EXECUT~1\;C:\Users\PETER~1.DUD\GOOGLE~1\DOCUME~1\Research\PROJEC~3\SUPERI~1\S4\S4\Model\EXECUT~1\..\swarm\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\inSALMO\Code\inSALMO\.libs;C:\swarm\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\GNUstep\bin;C:\GNUstep\GNUstep\System\Tools 
+
+C:\Users\peter.dudley\Google Drive\Documents\Research\Project - Salmon\Superimposition\S4\S4\Model\executable>SHAM.exe
+>>>>>>>>>>>>>>>>>>>>Displey Input Parameters
+-Output Location: C:/Users/peter.dudley/Desktop/Temp/Output.csv/n-Variable: Number_of_Spawners
+-Number of Values: 1
+-Patch area: 1000.000000
+-Spawner mean length: 0.762000
+-Spawner length SD: 0.076200
+-Day with most arrivals: 50
+-SD of arrival days: 11
+-Total number of spawners: 200
+-Temperature: 12.900000
+-ATU: 950.000000
+-Redd area: 8.280000
+-Defend area: 33.120000
+-Time limit: 60.000000
+-Guard time: 10
+-Fish fecund intercept: 8081.000000
+-Fish fecund slope: 1.542000
+-Guard radius: 3.247733
+-Redd radius: 1.623867
+-Search effort: 10
+-Days per run: 400
+-Iterations: 20
+-Prefer: 0.045000
+test:C:/Users/peter.dudley/Desktop/Temp/OutputSummary.csv
+>>>>>>>>>>>>>>>>>>>>Start Run
+Itteration 2 of 20. Value 1 of 1.
+Itteration 3 of 20. Value 1 of 1.
+Itteration 4 of 20. Value 1 of 1.
+Itteration 5 of 20. Value 1 of 1.
+Itteration 6 of 20. Value 1 of 1.
+Itteration 7 of 20. Value 1 of 1.
+Itteration 8 of 20. Value 1 of 1.
+Itteration 9 of 20. Value 1 of 1.
+Itteration 10 of 20. Value 1 of 1.
+Itteration 11 of 20. Value 1 of 1.
+Itteration 12 of 20. Value 1 of 1.
+Itteration 13 of 20. Value 1 of 1.
+Itteration 14 of 20. Value 1 of 1.
+Itteration 15 of 20. Value 1 of 1.
+Itteration 16 of 20. Value 1 of 1.
+Itteration 17 of 20. Value 1 of 1.
+Itteration 18 of 20. Value 1 of 1.
+Itteration 19 of 20. Value 1 of 1.
+Itteration 20 of 20. Value 1 of 1.
+***Run Complete***

@@ -1,0 +1,28 @@
+Output_Location C:/Users/peter.dudley/Desktop/Temp
+Patch_File C:/Users/peter.dudley/Desktop/Temp/PatchTest.txt
+Number_of_Patches 2
+Variable_Name Number_of_Spawners
+runs 2
+variableValues 100 200
+Days_Per_Simulation 400
+Arrival_Day_Mean 50
+Arrival_Day_SD 11
+Number_of_Spawners 100
+Spawner_Max_Length 0.762
+Spawner_Min_Length 0.762
+Optimim_Depth 10
+Depth_SD 5
+Optimim_Velocity 10
+Velocity_SD 7
+Search_Effort 2
+Time_Limit 60
+Fraction_Selective 0
+Spawner_Fecundity_Intercept 8000
+Spawner_Fecundity_Slope 1.5
+Redd_Area 8
+Guard_Area 33
+Guard_Time 6
+Temperature 13
+ATUs 950
+Replicates 4
+end
