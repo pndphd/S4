@@ -18,7 +18,7 @@
 	FILE *ppFile;
 
 	//Open the file by name
-	pFile = fopen("Example.txt", "r");
+	pFile = fopen("temp_pass_file.txt", "r");
 
 	//Begin to read and continue until end command
 	while(1)
@@ -193,7 +193,7 @@
 		patchProbablity[i] = 1/sqrt(2*3.14*pow(depthSD,2))*
 			exp(-pow(patchDepth[i]-maxDepth,2)/2/pow(depthSD,2))*
 			1/sqrt(2*3.14*pow(velocitySD,2))*
-			exp(-pow(patchVelocity[i]-maxVelocity,2)/2/pow(velocitySD,2))*patchArea[i];
+			exp(-pow(patchVelocity[i]-maxVelocity,2)/2/pow(velocitySD,2));//*patchArea[i];
 		totalProbablity = totalProbablity + patchProbablity[i];
 	}
 	// Normalize all ther probablities
