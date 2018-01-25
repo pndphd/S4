@@ -52,8 +52,8 @@
 
 - killThisFractionOfEggs: (double) f
 {
-	numberOfDeadEggs = numberOfDeadEggs + numberOfLiveEggs*f;
-	numberOfLiveEggs = numberOfLiveEggs*(1-f);
+	numberOfDeadEggs = numberOfDeadEggs + (int)(numberOfLiveEggs*f);
+	numberOfLiveEggs = (int)(numberOfLiveEggs*(1-f));
 	return self;
 }
 

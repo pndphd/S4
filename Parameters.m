@@ -52,11 +52,11 @@
 		{
 			fscanf(pFile, "%d", &incrimentCount);
 		}		
-		else if(0 == strcmp("Spawner_Min_Length",str0)&& 0 != strcmp(str0,str3))
+		else if(0 == strcmp("Spawner_Length_Min",str0)&& 0 != strcmp(str0,str3))
 		{
 			fscanf(pFile, "%lf", &spawnerMinLength);
 		}
-		else if(0 == strcmp("Spawner_Max_Length",str0)&& 0 != strcmp(str0,str3))
+		else if(0 == strcmp("Spawner_Length_Max",str0)&& 0 != strcmp(str0,str3))
 		{
 			fscanf(pFile, "%lf", &spawnerMaxLength);
 		}

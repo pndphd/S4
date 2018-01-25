@@ -33,7 +33,7 @@
 - (int) getHatchedEggs;
 - setHatchedEggs: (int) eggs;
 - (int) getKilledEggs;
-- setKilledEggs: (double) eggs;
+- setKilledEggs: (int) eggs;
 - (int) getSpilledEggs;
 - setSpilledEggs: (int) eggs;
 - (int) getSuperimposedRedds;

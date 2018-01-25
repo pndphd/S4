@@ -60,6 +60,7 @@
 - setHatchedEggs: (int) eggs;
 {
 	hatchedEggs = hatchedEggs + eggs;
+	//printf("Out Loop Hatched: %d\n", hatchedEggs);
 	return self;
 }
 
@@ -68,9 +69,10 @@
 	return killedEggs;
 }
 
-- setKilledEggs: (double) eggs;
+- setKilledEggs: (int) eggs;
 {
 	killedEggs = killedEggs + eggs;
+	//printf("Out Loop Killed: %d\n", killedEggs);
 	return self;
 }
 

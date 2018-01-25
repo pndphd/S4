@@ -173,7 +173,7 @@
 						overlap = (2*pow([parameters getReddRadius],2)*acos(distance/2/[parameters getReddRadius])
 							- distance/2*sqrt(4*pow([parameters getReddRadius],2)-pow(distance,2)))
 							/(3.14*pow([parameters getReddRadius],2));
-						[patch setKilledEggs: (double)[[reddIndex get] getNumberOfLiveEggs]*overlap];
+						[patch setKilledEggs: (int)[[reddIndex get] getNumberOfLiveEggs]*overlap];
 						[[reddIndex get] killThisFractionOfEggs: overlap];	
 						if([[reddIndex get] getSuperimposedFlag] == NO)
 						{
@@ -193,6 +193,7 @@
 		[redd createNewReddInPatch: patch withX: x Y: y andParameters: parameters];
 		redd = [redd createEnd];
 		[redd initNewReddWithAnEggCountOf: eggCount];
+		//printf("eggs: %d\n", eggCount);
 		[[patch getList] addLast: redd];
 		erase = YES;
 		[reddIndex drop];

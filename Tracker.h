@@ -3,6 +3,7 @@
 #import "Patch.h"
 #import "ReddList.h"
 #import "Spawner.h"
+#import "Habitat.h"
 #import "Parameters.h"
 #import <objectbase/SwarmObject.h>
 
