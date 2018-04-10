@@ -10,18 +10,19 @@
 {
 	Parameters * parameters;
 	BOOL selectiveFlag;
-	double guardTime;
 	int ID;	
 	int eggCount;
 	int day;
+	int lifespan;
+	int daysLeft;
 	
 	BOOL erase;
 	BOOL qued;
 	BOOL spawned;
 	BOOL alive;
-	int postSpawningDays;
 	int postArrivalDays;
 	int spilledEggs;
+	int postSpawningDays;
 
 	id redd;
 	BOOL open;
@@ -31,12 +32,13 @@
 	double patchChoice;
 	double patchLevel;
 	double patchLevelOld;
+	int guardTime;
 	
 	int i, j;
 }
 
 //create a new spawner with a size and ID
-- createNewSpawnerWithSize: (double) size ID: (int) id andParameters: (Parameters *) p onDay: (int) d;
+- createNewSpawnerWithSize: (double) size ID: (int) id andParameters: (Parameters *) p onDay: (int) d withLifespan: (int) l;
 //Just here to seperate creation method from others
 - createEnd; 
 //initalize the new spawner

@@ -1,14 +1,15 @@
 #import <objectbase/SwarmObject.h>
 #import "math.h"
+#import <stdlib.h>
 
 @interface Parameters: SwarmObject
 
 {
 	
 	// Output location
-	char *outputLocation[200];
-	char *outputSummary[200];
-	char *patchFile[200];
+	char outputLocation[200];
+	char outputSummary[200];
+	char patchFile[200];
 	// Patch Values
 	int patchCount;
 	double patchArea[100] ; 
@@ -21,11 +22,14 @@
 	//Spawner size data
 	double spawnerMinLength; 
 	double spawnerMaxLength; 
-	//Sapwner arrival data
+	int guardSpecies;
+	char guardSpeciesS[5];
+	//Sapwner arrival data and life span
 	int dayWithMostArrivals; 
 	int SDOfArrivalDays; 
+	int startLifespan;
+	int endLifespan;
 	int totalNumberOfSpawners; 
-	int guardTime;
 	int daysPerRun;
 	int iterations;
 	//Abiotic data
@@ -37,7 +41,6 @@
 	double ATU; 
 	// Fish Parameters
 	double reddArea; 
-	double timeLimit; 
 	double fishFecundIntercept; 
 	double fishFecundSlope; 
 	double defendArea;
@@ -64,6 +67,7 @@
 - (double) getDepthSD;
 - (double) getSpawnerMaxLength; 
 - (double) getSpawnerMinLength; 
+- (int) getGuardSpecies;
 - (double) getPatchDepth: (int) k;
 - (double) getPatchVelocity: (int) k;
 - (double) getPatchArea: (int) k;
@@ -71,14 +75,14 @@
 - (int) getPatchCount;
 - (int) getDayWithMostArrivals; 
 - (int) getSDOfArrivalDays; 
+- (int) getStartLifespan;
+- (int) getEndLifespan;
 - (int) getDaysPerRun; 
 - (int) getIterations;
 - (int) getTotalNumberOfSpawners; 
 - (double) getTemperature; 
 - (double) getATU; 
 - (double) getReddArea; 
-- (double) getTimeLimit;
-- (int) getGuardTime; 
 - (double) getFishFecundIntercept; 
 - (double) getFishFecundSlope; 
 - (double) getDefendArea;

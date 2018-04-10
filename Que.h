@@ -14,9 +14,11 @@
 	id spawnerQueList;
 	id spawnerPreQueList;
 	id listShuffler;
-	id <NormalDist> aNormalDist2;
+	id <NormalDist> arrivalNormalDist;
+
 	double size;
-	int sample;
+	int arrivalSample;
+	int lifespanSample;
 	int i;
 }
 

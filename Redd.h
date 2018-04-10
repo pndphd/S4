@@ -10,6 +10,7 @@
 	double area;
 	int hatchTime;
 	int guardTime;
+
 	//Trackers
 	int numberOfLiveEggs;
 	int numberOfDeadEggs;
@@ -25,7 +26,7 @@
 }
 
 //create a new redd with size
-- createNewReddInPatch: patch withX: (double) xCoordinate Y: (double) yCoordinate andParameters: (Parameters *) parameters;
+- createNewReddInPatch: patch withX: (double) xCoordinate Y: (double) yCoordinate parameters: (Parameters *) parameters andGuardTime: (int) g;
 //Just here to seperate creation method from others
 - createEnd;
 //initalize the new redd

@@ -3,15 +3,15 @@
 
 @implementation Spawner
 
-- createNewSpawnerWithSize: (double) size ID: (int) id andParameters: (Parameters *) p onDay: (int) d 
+- createNewSpawnerWithSize: (double) size ID: (int) id andParameters: (Parameters *) p onDay: (int) d withLifespan: (int)l
 {
 	parameters = p;
 	ID = id;
 	day = d;
+	lifespan = l;
 	// set ther egg count based on size
 	eggCount = (int)([parameters getFishFecundIntercept]
 	*pow(size,[parameters getFishFecundSlope]));
-	guardTime = [parameters getGuardTime];
 	//Make it selective or not based on a random draw form uniform distribution 
 	if([uniformDblRand getDoubleWithMin: 0 withMax: 1] > [parameters getPrefer])
 	{
@@ -71,7 +71,7 @@
 	}
 
 	// Check if you should be dead
-	if (postArrivalDays == [parameters getTimeLimit] && spawned == NO)
+	if (postArrivalDays == lifespan && spawned == NO)
 	{
 		[[habitat getPatch: 0] setSpilledEggs: eggCount];
 		alive = NO;
@@ -190,7 +190,15 @@
 		spawned = YES;
 		[patch addToReddCount];
 		redd = [Redd createBegin: [self getZone]];
-		[redd createNewReddInPatch: patch withX: x Y: y andParameters: parameters];
+		if ([parameters getGuardSpecies]==1)
+		{
+			guardTime = (lifespan - postArrivalDays);
+		}
+		else
+		{
+			guardTime = 0;
+		}
+		[redd createNewReddInPatch: patch withX: x Y: y parameters: parameters andGuardTime: guardTime];
 		redd = [redd createEnd];
 		[redd initNewReddWithAnEggCountOf: eggCount];
 		//printf("eggs: %d\n", eggCount);

@@ -70,10 +70,21 @@ grid [ttk::entry .c.dMost -width 7 -textvariable dMost] -column 2 -row $e -stick
 grid [ttk::label .c.sdDays -text "SD:"] -column 3 -row $e -sticky e
 grid [ttk::entry .c.sDays -width 7 -textvariable sDays] -column 4 -row $e -sticky we
 
-set g [expr $e+1]
+set ee [expr $e+1]
+
+grid [ttk::label .c.startLife -text "Spawner Start Lifespan (Days):"] -column 1 -row $ee -sticky e
+grid [ttk::entry .c.sLife -width 7 -textvariable sLife] -column 2 -row $ee -sticky we
+
+set ef [expr $ee+1]
+
+grid [ttk::label .c.endLife -text "Spawner End Lifespan (Days):"] -column 1 -row $ef -sticky e
+grid [ttk::entry .c.eLife -width 7 -textvariable eLife] -column 2 -row $ef -sticky we
+
+set g [expr $ef+1]
 
 grid [ttk::label .c.numSpawners -text "Number of Spawners:"] -column 1 -row $g -sticky e
 grid [ttk::entry .c.nSpawners -width 7 -textvariable nSpawners] -column 2 -row $g -sticky we
+
 
 set p [expr $g+1]
 
@@ -87,14 +98,14 @@ grid [ttk::entry .c.sSpawners -width 7 -textvariable sSpawners] -column 2 -row $
 
 set ad [expr $aa+1]
 
-grid [ttk::label .c.optdMean -text "Optimum Depth: Mean:"] -column 1 -row $ad -sticky e
+grid [ttk::label .c.optdMean -text "Optimum Depth (m): Mean:"] -column 1 -row $ad -sticky e
 grid [ttk::entry .c.odMean -width 7 -textvariable odMean] -column 2 -row $ad -sticky we
 grid [ttk::label .c.optdSD -text "SD:"] -column 3 -row $ad -sticky e
 grid [ttk::entry .c.odSD -width 7 -textvariable odSD] -column 4 -row $ad -sticky we
 
 set ae [expr $ad+1]
 
-grid [ttk::label .c.optvMean -text "Optimum Velocity: Mean:"] -column 1 -row $ae -sticky e
+grid [ttk::label .c.optvMean -text "Optimum Velocity (m/s): Mean:"] -column 1 -row $ae -sticky e
 grid [ttk::entry .c.ovMean -width 7 -textvariable ovMean] -column 2 -row $ae -sticky we
 grid [ttk::label .c.optvSD -text "SD:"] -column 3 -row $ae -sticky e
 grid [ttk::entry .c.ovSD -width 7 -textvariable ovSD] -column 4 -row $ae -sticky we
@@ -106,8 +117,8 @@ grid [ttk::entry .c.sEffort -width 7 -textvariable sEffort] -column 2 -row $q -s
 
 set s [expr $q+1]
 
-grid [ttk::label .c.limTime -text "Time Limit (days):"] -column 1 -row $s -sticky e
-grid [ttk::entry .c.lTime -width 7 -textvariable lTime] -column 2 -row $s -sticky we
+grid [ttk::label .c.guardSpecies -text "Guard Species (Yes/No) :"] -column 1 -row $s -sticky e
+grid [ttk::entry .c.gSpecies -width 7 -textvariable gSpecies] -column 2 -row $s -sticky we
 
 set h [expr $s+1]
 
@@ -131,13 +142,7 @@ set k [expr $j+1]
 grid [ttk::label .c.guaArea -text "Guard Area (m^2):"] -column 1 -row $k -sticky e
 grid [ttk::entry .c.gArea -width 7 -textvariable gArea] -column 2 -row $k -sticky we
 
-
-set l [expr $k+1]
-
-grid [ttk::label .c.guaTime -text "Guard Time (days):"] -column 1 -row $l -sticky e
-grid [ttk::entry .c.gTime -width 7 -textvariable gTime] -column 2 -row $l -sticky we
-
-set t [expr $l+1]
+set t [expr $k+1]
 
 grid [ttk::label .c.avgTemp -text "Temperature (C):"] -column 1 -row $t -sticky e
 grid [ttk::entry .c.aTemp -width 7 -textvariable aTemp] -column 2 -row $t -sticky we
@@ -223,6 +228,15 @@ proc save {} {
 	puts -nonewline $fileId "Spawner_Min_Length"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::sSpawners}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "Start_Lifespan"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::sLife}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "End_Lifespan"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::eLife}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "Guard_Species"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::gSpecies}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Optimim_Depth"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::odMean}]!=0} {puts $fileId ""}
@@ -238,9 +252,6 @@ proc save {} {
 	puts -nonewline $fileId "Search_Effort"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::sEffort}]!=0} {puts $fileId ""}
-	puts -nonewline $fileId "Time_Limit"
-	puts  -nonewline $fileId " "
-	if {[catch {puts $fileId $::lTime}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Fraction_Selective"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::fSel}]!=0} {puts $fileId ""}
@@ -256,9 +267,6 @@ proc save {} {
 	puts -nonewline $fileId "Guard_Area"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::gArea}]!=0} {puts $fileId ""}
-	puts -nonewline $fileId "Guard_Time"
-	puts  -nonewline $fileId " "
-	if {[catch {puts $fileId $::gTime}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Temperature"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::aTemp}]!=0} {puts $fileId ""}
@@ -309,6 +317,12 @@ proc load {} {
 	gets $fi temp
 	set sSpawnersL [lindex [split $temp] 1]
 	gets $fi temp
+	set sLifeL [lindex [split $temp] 1]
+	gets $fi temp
+	set eLifeL [lindex [split $temp] 1]
+	gets $fi temp
+	set gSpeciesL [lindex [split $temp] 1]
+	gets $fi temp
 	set odMeanL [lindex [split $temp] 1]
 	gets $fi temp
 	set odSDL [lindex [split $temp] 1]
@@ -319,8 +333,6 @@ proc load {} {
 	gets $fi temp
 	set sEffortL [lindex [split $temp] 1]
 	gets $fi temp
-	set lTimeL [lindex [split $temp] 1]
-	gets $fi temp
 	set fSelL [lindex [split $temp] 1]
 	gets $fi temp
 	set fISpawnersL [lindex [split $temp] 1]
@@ -330,8 +342,6 @@ proc load {} {
 	set rAreaL [lindex [split $temp] 1]
 	gets $fi temp
 	set gAreaL [lindex [split $temp] 1]		
-	gets $fi temp
-	set gTimeL [lindex [split $temp] 1]	
 	gets $fi temp
 	set aTempL [lindex [split $temp] 1]		
 	gets $fi temp
@@ -347,6 +357,12 @@ proc load {} {
 	.c.patCount insert 0 $patCountL
 	.c.vName delete 0 end
 	.c.vName insert 0 $vNameL
+	.c.sLife delete 0 end
+	.c.sLife insert 0 $sLifeL
+	.c.eLife delete 0 end
+	.c.eLife insert 0 $eLifeL
+	.c.gSpecies delete 0 end
+	.c.gSpecies insert 0 $gSpeciesL
 	.c.vCount delete 0 end
 	.c.vCount insert 0 $vCountL
 	.c.vValues delete 0 end
@@ -373,8 +389,6 @@ proc load {} {
 	.c.ovSD insert 0 $ovSDL
 	.c.sEffort delete 0 end
 	.c.sEffort insert 0 $sEffortL
-	.c.lTime delete 0 end
-	.c.lTime insert 0 $lTimeL
 	.c.fSel delete 0 end
 	.c.fSel insert 0 $fSelL
 	.c.fISpawners delete 0 end
@@ -385,8 +399,6 @@ proc load {} {
 	.c.rArea insert 0 $rAreaL
 	.c.gArea delete 0 end
 	.c.gArea insert 0 $gAreaL
-	.c.gTime delete 0 end
-	.c.gTime insert 0 $gTimeL
 	.c.aTemp delete 0 end
 	.c.aTemp insert 0 $aTempL
 	.c.aTUs delete 0 end
@@ -438,6 +450,15 @@ proc calculate {} {
 	puts -nonewline $fileId "Spawner_Length_Min"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::sSpawners}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "Start_Lifespan"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::sLife}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "End_Lifespan"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::eLife}]!=0} {puts $fileId ""}
+	puts -nonewline $fileId "Guard_Species"
+	puts  -nonewline $fileId " "
+	if {[catch {puts $fileId $::gSpecies}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Optimim_Depth"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::odMean}]!=0} {puts $fileId ""}
@@ -453,9 +474,6 @@ proc calculate {} {
 	puts -nonewline $fileId "Search_Effort"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::sEffort}]!=0} {puts $fileId ""}
-	puts -nonewline $fileId "Time_Limit"
-	puts  -nonewline $fileId " "
-	if {[catch {puts $fileId $::lTime}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Fraction_Selective"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::fSel}]!=0} {puts $fileId ""}
@@ -471,9 +489,6 @@ proc calculate {} {
 	puts -nonewline $fileId "Guard_Area"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::gArea}]!=0} {puts $fileId ""}
-	puts -nonewline $fileId "Guard_Time"
-	puts  -nonewline $fileId " "
-	if {[catch {puts $fileId $::gTime}]!=0} {puts $fileId ""}
 	puts -nonewline $fileId "Temperature"
 	puts  -nonewline $fileId " "
 	if {[catch {puts $fileId $::aTemp}]!=0} {puts $fileId ""}

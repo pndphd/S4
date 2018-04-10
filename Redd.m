@@ -3,12 +3,12 @@
 @implementation Redd
 
 //create a new redd with size
-- createNewReddInPatch:  patch withX: (double) xCoordinate Y: (double) yCoordinate andParameters: (Parameters *) p 
+- createNewReddInPatch:  patch withX: (double) xCoordinate Y: (double) yCoordinate parameters: (Parameters *) p andGuardTime: (int) g
 {
 	parameters = p;
 	patchNumber = [patch getNumber];
 	area = [parameters getReddArea];
-	guardTime = [parameters getGuardTime];
+	guardTime = g;
 	hatchTime = [parameters getATU]/[parameters getTemperature];
 	x=xCoordinate;
 	y=yCoordinate;

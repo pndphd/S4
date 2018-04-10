@@ -12,38 +12,58 @@
 
 - setQueDistributionWithParameters: (Parameters *) parameters 
 {
+
 	totalSpawners = [parameters getTotalNumberOfSpawners];
 	// create a shuffler for the list
 	listShuffler = [ListShuffler create: [self getZone]];
 	//Make 1 normal distributions one for the arrival times 
-	aNormalDist2 = [NormalDist create: [self getZone] setGenerator: randomGenerator];
-	[aNormalDist2 setMean:[parameters getDayWithMostArrivals] setStdDev:[parameters getSDOfArrivalDays]];
+	arrivalNormalDist = [NormalDist create: [self getZone] setGenerator: randomGenerator];
+	[arrivalNormalDist setMean:[parameters getDayWithMostArrivals] setStdDev:[parameters getSDOfArrivalDays]];
+	//Make another normal distribution 
+
 	
-	// Go through each spawner an get it an arrival day and length
+
+	// Go through each spawner an get it an arrival day and length and reproductive life span
 	for(i=1; i<=totalSpawners; i++)
 	{
-		sample = (int)[aNormalDist2 getDoubleSample];
+
+		arrivalSample = (int)[arrivalNormalDist getDoubleSample];
+
 		// Move any fish that are created before ther first day to the first day
-		if (sample < ([parameters getDayWithMostArrivals]-3*[parameters getSDOfArrivalDays])) 
+		if (arrivalSample < ([parameters getDayWithMostArrivals]-3*[parameters getSDOfArrivalDays])) 
 		{
-			//  if the fish is trying to arrive b4 the simulation starts force it to arrive on day 1 
+			 
 			printf("!!!!!!!!!!WARNING!!!!!!!!!!\n");
-			printf(">>Fish atempeted to create before day 1 of arrival window.  Moved to day 1.\n");
-			sample = ([parameters getDayWithMostArrivals]-3*[parameters getSDOfArrivalDays]);
+			printf(">>Fish atempeted to create before day 1 of arrival window (6*SD arrival days).  Moved to day 1.\n");
+			arrivalSample = ([parameters getDayWithMostArrivals]-3*[parameters getSDOfArrivalDays]);
 		}
-		if (sample > ([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays])) 
+		if (arrivalSample > ([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays])) 
 		{
-			//  if the fish is trying to arrive b4 the simulation starts force it to arrive on day 1 
+			
 			printf("!!!!!!!!!!WARNING!!!!!!!!!!\n");
-			printf(">>Fish atempeted to create before final day of arrival window.  Moved to final day.\n");
-			sample = ([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays]);
+			printf(">>Fish atempeted to create before final day of arrival window (6*SD arrival days).  Moved to final day.\n");
+			arrivalSample = ([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays]);
 		}
+		if (arrivalSample < 0) 
+		{
+			
+			printf("!!!!!!!!!!WARNING!!!!!!!!!!\n");
+			printf(">>Fish atempeted to create before simulation window.  End simulation.\n");
+			exit(1);
+		}
+
+
+		
 		size =  [parameters getSpawnerMinLength]+([parameters getSpawnerMaxLength]-[parameters getSpawnerMinLength])*
-			(([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays])-sample)/
+			(([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays])-arrivalSample)/
 			(6*[parameters getSDOfArrivalDays]);
+		lifespanSample = [parameters getEndLifespan]+([parameters getStartLifespan]-[parameters getEndLifespan])*
+			(([parameters getDayWithMostArrivals]+3*[parameters getSDOfArrivalDays])-arrivalSample)/
+			(6*[parameters getSDOfArrivalDays]);
+		
 		//Create that spawner and add her to the list
 		spawner = [Spawner createBegin: [self getZone]];
-		[spawner createNewSpawnerWithSize: size ID: IDCount andParameters: parameters onDay: (int) sample];
+		[spawner createNewSpawnerWithSize: size ID: IDCount andParameters: parameters onDay: (int) arrivalSample withLifespan: (int) lifespanSample];
 		spawner = [spawner createEnd];
 		[spawner initNewSpawner];
 		[spawnerPreQueList addLast: spawner];
@@ -98,7 +118,7 @@
 - resetList
 {
 	[spawnerQueList deleteAll];
-	[aNormalDist2 drop];
+	[arrivalNormalDist drop];
 	return self;
 }
 

@@ -26,7 +26,7 @@
 	fprintf(outputFile,"Day, Redds, Superimposed, Unspawned Eggs, Killed Eggs, Hatched Eggs,Fraction Killed\n");
 	fclose(outputFile);
 	outputSummaryFile = fopen([parameters getSummaryLocation], "w");
-	printf( "File Location: %s\n",[parameters getSummaryLocation]);
+	printf( "-Output File Location: %s\n",[parameters getSummaryLocation]);
 	ret=fprintf(outputSummaryFile,"Day, Redds, Superimposed, Guarding, Unspawned Eggs, Killed Eggs, Hatched Eggs,Fraction Killed\n");
 
 	//Check to see if the oputput file is open and not writable
@@ -34,8 +34,6 @@
 	if(ret ==-1)
 	{
 		printf("Output file not writable. A file with its name is likely open.\n");
-		printf("Press Any Key to Close.\n");  
-		getchar();    
 		exit(1);
 	}
 	

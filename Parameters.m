@@ -46,7 +46,7 @@
 		// Read in the rest of the parameters
 		else if (0 == strcmp("Output_Location",str0) && 0 != strcmp(str0,str3))
 		{
-			fscanf(pFile, "%[^\n]%*c", &outputLocation);
+			fscanf(pFile, "%[^\n]%*c", outputLocation);
 		}
 		else if (0 == strcmp("runs",str0) && 0 != strcmp(str0,str3))
 		{
@@ -84,14 +84,6 @@
 		{
 			fscanf(pFile, "%lf", &reddArea);
 		}
-		else if(0 == strcmp("Time_Limit",str0)&& 0 != strcmp(str0,str3))
-		{
-			fscanf(pFile, "%lf", &timeLimit);
-		}
-		else if(0 == strcmp("Guard_Time",str0)&& 0 != strcmp(str0,str3))
-		{
-			fscanf(pFile, "%d", &guardTime);
-		}
 		else if(0 == strcmp("Spawner_Fecundity_Intercept",str0)&& 0 != strcmp(str0,str3))
 		{
 			fscanf(pFile, "%lf", &fishFecundIntercept);
@@ -103,6 +95,18 @@
 		else if(0 == strcmp("Days_Per_Simulation",str0)&& 0 != strcmp(str0,str3))
 		{
 			fscanf(pFile, "%d", &daysPerRun);
+		}
+		else if(0 == strcmp("Start_Lifespan",str0)&& 0 != strcmp(str0,str3))
+		{
+			fscanf(pFile, "%d", &startLifespan);
+		}
+		else if(0 == strcmp("End_Lifespan",str0)&& 0 != strcmp(str0,str3))
+		{
+			fscanf(pFile, "%d", &endLifespan);
+		}
+		else if(0 == strcmp("Guard_Species",str0)&& 0 != strcmp(str0,str3))
+		{
+			fscanf(pFile, "%s", guardSpeciesS);
 		}
 		else if(0 == strcmp("Guard_Area",str0)&& 0 != strcmp(str0,str3))
 		{
@@ -126,9 +130,9 @@
 		}
 		else if(0 == strcmp("Patch_File",str0)&& 0 != strcmp(str0,str3))
 		{
-			fscanf(pFile, "%[^\n]%*c", &patchFile);
+			fscanf(pFile, "%[^\n]%*c", patchFile);
 		}
-		else if(0 == strcmp("Optimum_Velocity",str0)&& 0 != strcmp(str0,str3))
+		else if(0 == strcmp("Optimim_Velocity",str0)&& 0 != strcmp(str0,str3))
 		{
 			fscanf(pFile, "%lf", &maxVelocity);
 		}
@@ -152,55 +156,84 @@
 	strcpy(patchFile,temp1);
  	ppFile = fopen(patchFile, "r");
 	
-	// Read in ther data from the patch file
-	while(1)
+	// Check id the variable name is patch area 
+	// if it is set dummy values fo depth, velocity, and probablity 
+	if (0 == strcmp("Variable_Name", "Patch_Area"))
 	{
-		fscanf(ppFile, "%s", str0);
-		//printf("main 2 = %s\n", str0);
-		// Check if the text file has ended
-		// and break if it has
-		if(0 == strcmp("end",str0))
-		{
-			break;
-		}
-		else if (0 == strcmp("Area", str0))
-		{
-			for (i=0; i<= patchCount; i++)
-			{
-				fscanf(ppFile, "%lf", &patchArea[i]);
-			}
-		}
-		else if (0 == strcmp("Depth", str0))
-		{
-			for (i=0; i<= patchCount; i++)
-			{
-				fscanf(ppFile, "%lf", &patchDepth[i]);
-			}
-		}
-		else if (0 == strcmp("Velocity", str0))
-		{
-			for (i=0; i<= patchCount; i++)
-			{
-				fscanf(ppFile, "%lf", &patchVelocity[i]);
-			}
-		}
+		patchArea[0]= values[0];
+		patchDepth[0] = 1;
+		patchVelocity[0] = 1;
+		patchProbablity[0] = 1;
 	}
-	
-	// set the patch probablities
-	totalProbablity = 0;
-	for (i=0; i< patchCount; i++)
+	else
 	{
-		patchProbablity[i] = 1/sqrt(2*3.14*pow(depthSD,2))*
-			exp(-pow(patchDepth[i]-maxDepth,2)/2/pow(depthSD,2))*
-			1/sqrt(2*3.14*pow(velocitySD,2))*
-			exp(-pow(patchVelocity[i]-maxVelocity,2)/2/pow(velocitySD,2));//*patchArea[i];
-		totalProbablity = totalProbablity + patchProbablity[i];
-	}
-	// Normalize all ther probablities
-	for (i=0; i< patchCount; i++)
-	{
-		patchProbablity[i] = patchProbablity[i]/totalProbablity;
-		//printf("probablity %lf\n", patchProbablity[i]);
+		// Read in ther data from the patch file
+		while(1)
+		{
+			fscanf(ppFile, "%s", str0);
+			// Check if the text file has ended
+			// and break if it has
+			if(0 == strcmp("end",str0))
+			{
+				break;
+			}
+			else if (0 == strcmp("Area", str0))
+			{
+				for (i=0; i<= patchCount; i++)
+				{
+					fscanf(ppFile, "%lf", &patchArea[i]);
+				}
+			}
+			else if (0 == strcmp("Depth", str0))
+			{
+				for (i=0; i<= patchCount; i++)
+				{
+					fscanf(ppFile, "%lf", &patchDepth[i]);
+				}
+			}
+			else if (0 == strcmp("Velocity", str0))
+			{
+				for (i=0; i<= patchCount; i++)
+				{
+					fscanf(ppFile, "%lf", &patchVelocity[i]);
+				}
+			}
+		}
+		
+		// set the patch probablities
+		totalProbablity = 0;
+		for (i=0; i< patchCount; i++)
+		{
+			patchProbablity[i] = 1/sqrt(2*3.14*pow(depthSD,2))*
+				exp(-pow(patchDepth[i]-maxDepth,2)/2/pow(depthSD,2))*
+				1/sqrt(2*3.14*pow(velocitySD,2))*
+				exp(-pow(patchVelocity[i]-maxVelocity,2)/2/pow(velocitySD,2))*patchArea[i];
+			totalProbablity = totalProbablity + patchProbablity[i];
+			
+			
+			
+			printf ("-first term %lf\n",1/sqrt(2*3.14*pow(depthSD,2)) );
+			printf ("-2nd term %lf\n",exp(-pow(patchDepth[i]-maxDepth,2)/2/pow(depthSD,2)));
+			printf ("-3rd term %lf\n",1/sqrt(2*3.14*pow(velocitySD,2)) );
+			printf ("-4th term %lf\n",exp(-pow(patchVelocity[i]-maxVelocity,2)/2/pow(velocitySD,2)));
+			
+			printf ("-DepthSD %lf\n",depthSD );
+			printf ("-VSD %lf\n",velocitySD );
+			printf ("-DepthMax %lf\n",maxDepth );
+			printf ("-VelocityMax %lf\n",maxVelocity );
+			printf ("-Patch Velocity %lf\n", patchVelocity[i] );
+			printf ("-Patch Depth %lf\n", patchDepth[i] );
+			printf ("-Init Patch Probablity %d = %lf\n", i, patchProbablity[i] );
+		}
+		// Normalize all ther probablities
+		for (i=0; i< patchCount; i++)
+		{
+			patchProbablity[i] = patchProbablity[i]/totalProbablity;
+			printf ("-Patch Velocity %lf\n", patchVelocity[i] );
+			printf ("-Patch Depth %lf\n", patchDepth[i] );
+			printf ("-Patch Probablity %d = %lf\n", i, patchProbablity[i] );
+
+		}
 	}
 	
 	// set up a counter to cout through the different values of ther variable
@@ -237,6 +270,10 @@
 	{
 		spawnerMaxLength= values[j];
 	}
+	else if(0 == strcmp("Patch_Area",str3))
+	{
+		patchArea[0]= values[j];
+	}
 	else if(0 == strcmp("Arrival_Day_Mean",str3))
 	{
 		dayWithMostArrivals= values[j];
@@ -249,6 +286,15 @@
 	{
 		totalNumberOfSpawners= values[j];
 	}
+	else if(0 == strcmp("Start_Lifespan",str3))
+	{
+		startLifespan= values[j];
+	}
+	else if(0 == strcmp("End_Lifespan",str3))
+	{
+		endLifespan= values[j];
+	}
+
 	else if(0 == strcmp("Temperature",str3))
 	{
 		temperature= values[j];
@@ -260,14 +306,6 @@
 	else if(0 == strcmp("Redd_Area",str3))
 	{
 		reddArea= values[j];
-	}
-	else if(0 == strcmp("Time_Limit",str3))
-	{
-		timeLimit= values[j];
-	}
-	else if(0 == strcmp("Guard_Time",str3))
-	{
-		guardTime= values[j];
 	}
 	else if(0 == strcmp("Spawner_Fecundity_Intercept",str3))
 	{
@@ -294,10 +332,46 @@
 		prefer= values[j];
 	}
 	
+	else if(0 == strcmp("Optimum_Velocity",str3))
+	{
+		maxVelocity= values[j];
+	}
+	else if(0 == strcmp("Velocity_SD",str3))
+	{
+		velocitySD= values[j];
+	}
+	else if(0 == strcmp("Optimim_Depth",str3))
+	{
+		maxDepth= values[j];
+	}
+	else if(0 == strcmp("Depth_SD",str3))
+	{
+		depthSD= values[j];
+	}
+	else
+	{
+		printf("Variable name not reconized.  Consult manual.\n");
+		exit(1);	
+	}
+	
 	//Calculate some parameters based on input parameters
 	guardRadius = sqrt(defendArea/3.14);
 	reddRadius = sqrt(reddArea/3.14);
-
+	
+	if (0 == strcmp("Yes",guardSpeciesS))
+	{
+		guardSpecies = 1;
+	}
+	else if (0 == strcmp("No",guardSpeciesS))
+	{
+		guardSpecies = 0;
+	}
+	else
+	{
+		printf("Guard species bool not set correctly.  Set to Y or N.\n");
+		exit(1);
+	}
+	
     //Print out the parameters
 	printf (">>>>>>>>>>>>>>>>>>>>Displey Input Parameters\n");
 	printf ("-Patch Area of First Patch: %lf\n", patchArea[0]);
@@ -307,15 +381,18 @@
 	printf ("-Number of Values: %d\n", incrimentCount);
 	printf ("-Spawner min length: %lf\n",spawnerMinLength);
 	printf ("-Spawner max length: %lf\n",spawnerMaxLength); 
+	printf ("-Patch Area: %lf\n",patchArea[0]); 
 	printf ("-Day with most arrivals: %d\n",dayWithMostArrivals); 
 	printf ("-SD of arrival days: %d\n",SDOfArrivalDays); 
+	printf ("-Start reproductive lifespan: %d\n", startLifespan);
+	printf ("-End reproductive lifespan: %d\n", endLifespan);
+	printf ("-Variable: %s\n", str3);
+	printf ("-Guard species (1=YES, 0=NO): %d\n", guardSpecies);
 	printf ("-Total number of spawners: %d\n",totalNumberOfSpawners); 
 	printf ("-Temperature: %lf\n",temperature); 
 	printf ("-ATU: %lf\n",ATU); 
 	printf ("-Redd area: %lf\n",reddArea); 
 	printf ("-Defend area: %lf\n",defendArea); 
-	printf ("-Time limit: %lf\n",timeLimit); 
-	printf ("-Guard time: %d\n", guardTime);
 	printf ("-Fish fecund intercept: %lf\n",fishFecundIntercept); 
 	printf ("-Fish fecund slope: %lf\n",fishFecundSlope); 
 	printf ("-Guard radius: %lf\n",guardRadius);
@@ -400,6 +477,19 @@
 	return SDOfArrivalDays;
 }
 
+- (int) getStartLifespan; 
+{
+	return startLifespan;
+}
+- (int) getEndLifespan; 
+{
+	return endLifespan;
+}
+- (int) getGuardSpecies; 
+{
+	return guardSpecies;
+}
+
 - (int) getDaysPerRun; 
 {
 	return daysPerRun;
@@ -423,16 +513,6 @@
 - (double) getReddArea; 
 {
 	return reddArea;
-}
-
-- (double) getTimeLimit; 
-{
-	return timeLimit;
-}
-
-- (int) getGuardTime;
-{
-	return guardTime;
 }
 
 - (int) getIterations;
